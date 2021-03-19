@@ -1,0 +1,34 @@
+{
+  "name": "cleanbuddy-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eetu-niittymaki/Cleaner-Service-Project-Backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eetu-niittymaki/Cleaner-Service-Project-Backend/issues"
+  },
+  "homepage": "https://github.com/eetu-niittymaki/Cleaner-Service-Project-Backend#readme",
+  "devDependencies": {
+    "eslint": "^7.20.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.3.1"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mysql": "^2.18.1",
+    "router": "^1.3.5",
+    "tedious": "^11.0.4"
+  }
+}
