@@ -1,5 +1,5 @@
 const mysql = require('mysql')
-const config = require('./config.js')
+const config = require('./config copy.js')
 
 const connection = mysql.createPool(config)
 
@@ -14,8 +14,8 @@ class ConnectionFunctions {
     connection.end()
   }
 
-  // GET all tasks
-  static findAll () {
+  // GET all customers
+  static getCustomers () {
     return new Promise((resolve, reject) => {
       if (connection) {
         connection.query('SELECT * FROM customers', (err, task) => {
@@ -28,7 +28,35 @@ class ConnectionFunctions {
     })
   }
 
-  static save (first_name, last_name, address, phone, email, password) {
+  // GET all products
+  static getProducts () {
+    return new Promise((resolve, reject) => {
+      if (connection) {
+        connection.query('SELECT * FROM products', (err, task) => {
+          if (err) throw (err)
+          resolve(task)
+        })
+      } else {
+        reject(Error)
+      }
+    })
+  }
+
+  // GET all suppliers
+  static getSuppliers () {
+    return new Promise((resolve, reject) => {
+      if (connection) {
+        connection.query(`SELECT name, phone, email FROM suppliers`, (err, task) => {
+          if (err) throw (err)
+          resolve(task)
+        })
+      } else {
+        reject(Error)
+      }
+    })
+  }
+
+  static saveCustomer (first_name, last_name, address, phone, email, password) {
     return new Promise((resolve, reject) => {
       if (connection) {
         const sql = `INSERT INTO customers (${connection.escape(first_name)},
@@ -51,5 +79,5 @@ module.exports = ConnectionFunctions
 
 // curl -X POST 'first_name=Pekka&last_name=PEKKA&address=koti&phone=23124145&email=asda@dd.häh' http://localhost:8080/api
 
-// INSERT INTO customers (first_name, last_name, address, phone, email, password)
-// VALUES ('liisa', 'jaska', 'koti', '12324', 'hmm@what.com', NULL);
+//INSERT INTO products (supplier_id, product_name, product_description, product_price)
+//VALUES ((SELECT supplier_id from suppliers where name="Jaskan Firma"), "Ihan OK siivous", "Mä teen jotain", "25");
