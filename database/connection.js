@@ -32,7 +32,10 @@ class ConnectionFunctions {
   static getProducts () {
     return new Promise((resolve, reject) => {
       if (connection) {
-        connection.query('SELECT * FROM products', (err, task) => {
+        connection.query(`SELECT name, product_name, product_description, product_price
+                          FROM products
+                          INNER JOIN suppliers
+                          ON product_id = suppliers.supplier_id`, (err, task) => {
           if (err) throw (err)
           resolve(task)
         })
@@ -46,7 +49,7 @@ class ConnectionFunctions {
   static getSuppliers () {
     return new Promise((resolve, reject) => {
       if (connection) {
-        connection.query(`SELECT name, phone, email FROM suppliers`, (err, task) => {
+        connection.query('SELECT name, phone, email FROM suppliers', (err, task) => {
           if (err) throw (err)
           resolve(task)
         })
@@ -79,5 +82,5 @@ module.exports = ConnectionFunctions
 
 // curl -X POST 'first_name=Pekka&last_name=PEKKA&address=koti&phone=23124145&email=asda@dd.häh' http://localhost:8080/api
 
-//INSERT INTO products (supplier_id, product_name, product_description, product_price)
-//VALUES ((SELECT supplier_id from suppliers where name="Jaskan Firma"), "Ihan OK siivous", "Mä teen jotain", "25");
+// INSERT INTO products (supplier_id, product_name, product_description, product_price)
+// VALUES ((SELECT supplier_id from suppliers where name="Jaskan Firma"), "Ihan OK siivous", "Mä teen jotain", "25");

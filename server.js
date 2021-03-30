@@ -28,7 +28,7 @@ router.get('/api/products', async (req, res) => {
   }
 })
 
-// Get suppleirs
+// Get suppliers
 router.get('/api/suppliers', async (req, res) => {
   try {
     const results = await connection.getSuppliers()
