@@ -59,11 +59,11 @@ class ConnectionFunctions {
     })
   }
 
-  static saveCustomer (first_name, last_name, address, phone, email, password) {
+  static saveCustomer (firstName, lastName, address, phone, email, password) {
     return new Promise((resolve, reject) => {
       if (connection) {
-        const sql = `INSERT INTO customers (${connection.escape(first_name)},
-                                            ${connection.escape(last_name)}, 
+        const sql = `INSERT INTO customers (${connection.escape(firstName)},
+                                            ${connection.escape(lastName)}, 
                                             ${connection.escape(address)}, 
                                             ${connection.escape(phone)}, 
                                             ${connection.escape(email)}, 
