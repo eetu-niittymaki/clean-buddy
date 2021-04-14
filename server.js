@@ -16,10 +16,14 @@ router.use(
   }
 );
 
+router.use("*", express.static("build"));
+
+/*
 // Handles any requests that don't match the ones above
 router.get("*", function (req, res) {
   res.sendFile("./build/index.html");
 });
+*/
 
 router.use(
   session({
