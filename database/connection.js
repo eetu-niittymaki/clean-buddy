@@ -81,10 +81,11 @@ class ConnectionFunctions {
   }
 
   // Add supplier to DB
-  static saveSupplier (name, streetAddress, city, postcode, phone, email, password) {
+  static saveSupplier (name, supplierDescription, streetAddress, city, postcode, phone, email, password) {
     return new Promise((resolve, reject) => {
       if (connection) {
         const sql = `INSERT INTO suppliers (${connection.escape(name)},
+                                            ${connection.escape(supplierDescription)},
                                             ${connection.escape(streetAddress)}, 
                                             ${connection.escape(city)}, 
                                             ${connection.escape(postcode)}, 

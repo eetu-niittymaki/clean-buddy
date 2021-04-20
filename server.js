@@ -10,7 +10,7 @@ router.use(
 
   express.static('build'),
   (req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*')
+    res.header('Access-Control-Allow-Origin')
     next()
   }
 )
@@ -93,6 +93,7 @@ router.post('/api/customers', async (req, res) => {
 router.post('/api/suppliers', async (req, res) => {
   try {
     const name = req.body.name
+    const supplierDescription = req.body.suppleir_description
     const streetAddress = req.body.street_address
     const city = req.body.city
     const postcode = req.body.postcodde
@@ -101,6 +102,7 @@ router.post('/api/suppliers', async (req, res) => {
     const password = req.body.password
     const results = await connection.saveSupplier(
       name,
+      supplierDescription,
       streetAddress,
       city,
       postcode,
