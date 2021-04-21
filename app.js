@@ -9,7 +9,7 @@ const database = require('./database/connection.js')
 
 app.use(cors());
 app.use(server);
-app.use(express.static("public"));
+//app.use(express.static("public"));
 
 const port = process.env.PORT || 8080
 

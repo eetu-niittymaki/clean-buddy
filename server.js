@@ -5,6 +5,8 @@ const { request, response } = require('express')
 // const jwt = require('jsonwebtoken')
 const router = express.Router()
 
+router.use(express.json())
+/*
 router.use(
   express.json(),
   express.urlencoded({ extended: true }),
@@ -23,7 +25,7 @@ router.get('*', function (req, res) {
   res.sendFile('./build/index.html');
 });
 */
-
+/*
 router.use(
   session({
     secret: 'secret',
@@ -31,6 +33,7 @@ router.use(
     saveUninitialized: true
   })
 )
+*/
 
 // Get customers
 router.get('/api/customers', async (req, res) => {
