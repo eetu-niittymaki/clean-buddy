@@ -5,7 +5,12 @@ const cors = require('cors')
 const server = require('./server.js')
 const database = require('./database/connection.js')
 
-app.use(server, cors())
+//app.use(server, cors())
+
+app.use(cors());
+app.use("/api",server);
+app.use(express.static("public"));
+
 const port = process.env.PORT || 8080
 
 // Start server
