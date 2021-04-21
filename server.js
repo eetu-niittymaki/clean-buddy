@@ -1,4 +1,3 @@
-const createError = require('http-errors')
 const express = require('express')
 const session = require('express-session')
 const connection = require('./database/connection.js')
@@ -12,7 +11,7 @@ router.use(
   express.static('build'),
   (req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*')
-    next(createError(404))
+    next()
   }
 )
 
