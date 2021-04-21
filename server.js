@@ -33,6 +33,10 @@ router.use(
   })
 )
 
+router.get('*', function (req, res) {
+  res.sendFile('./build/index.html');
+});
+
 
 // Get customers
 router.get('/api/customers', async (req, res) => {
