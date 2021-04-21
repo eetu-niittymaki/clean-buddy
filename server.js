@@ -4,6 +4,7 @@ const connection = require('./database/connection.js')
 const { request, response } = require('express')
 // const jwt = require('jsonwebtoken')
 const router = express.Router()
+const path = require("path");
 
 
 router.use(
@@ -34,7 +35,7 @@ router.use(
 )
 
 router.get('*', function (req, res) {
-  res.sendFile('./build/index.html');
+  res.sendFile(path.resolve('./build/index.html'));
 });
 
 
