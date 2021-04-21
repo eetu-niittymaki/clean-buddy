@@ -15,6 +15,7 @@ CREATE TABLE customers (
 CREATE TABLE suppliers(
     supplier_id INT AUTO_INCREMENT,
     name VARCHAR(45) NOT NULL,
+    supplier_description VARCHAR(255) NOT NULL,
     street_address VARCHAR(255) NOT NULL,
     city VARCHAR(255) NOT NULL,
     postcode VARCHAR(255) NOT NULL,
