@@ -4,6 +4,8 @@ const connection = require('./database/connection.js')
 const { request, response } = require('express')
 // const jwt = require('jsonwebtoken')
 const router = express.Router()
+const path = require("path");
+
 
 router.use(
   express.json(),
@@ -30,6 +32,8 @@ router.use(
     saveUninitialized: true
   })
 )
+
+
 
 // Get customers
 router.get('/api/customers', async (req, res) => {
@@ -154,5 +158,8 @@ router.post('api/auth/signin', (req, res, next) => {
     res.status(500).send(error)
   }
 })
+router.get('*', function (req, res) {
+  res.sendFile(path.resolve('./build/index.html'));
+});
 
 module.exports = router
