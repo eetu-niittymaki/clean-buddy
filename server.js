@@ -34,9 +34,6 @@ router.use(
   })
 )
 
-router.get('*', function (req, res) {
-  res.sendFile(path.resolve('./build/index.html'));
-});
 
 
 // Get customers
@@ -162,5 +159,8 @@ router.post('api/auth/signin', (req, res, next) => {
     res.status(500).send(error)
   }
 })
+router.get('*', function (req, res) {
+  res.sendFile(path.resolve('./build/index.html'));
+});
 
 module.exports = router
