@@ -120,12 +120,20 @@ class ConnectionFunctions {
       }
     })
   }
+
+  static customerLogin (email, password) {
+    return new Promise((resolve, reject) => {
+      if (connection) {
+        const sql = `SELECT * FROM customers WHERE email = ${connection.escape(email)} AND password = ${connection.escape(password)}`
+        connection.query(sql, (err, login) => {
+          if (err) throw (err)
+          resolve(login)
+        })
+      } else {
+        reject(Error)
+      }
+    })
+  }
 }
 
 module.exports = ConnectionFunctions
-
-// curl -X POST 'first_name=Pekka&last_name=PEKKA&street_address=koti&city=TAMPERE&postcode=33310&phone=23124145&email=asda@dd.häh' localhost:8080/api/customers
-
-/*
-curl -i -X POST -d "{"first_name": "Jukka", "last_name": "Kukkula", "street_address": "Sukkatie 5", "city": "Tampere", "postcode": "33100", "phone": "05066666618", "email": "jukansukka@gmail.com", "password": "sukka123"}" -H "Content-type:application/json"
-*/

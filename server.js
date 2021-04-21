@@ -1,12 +1,15 @@
 const express = require('express')
 const session = require('express-session')
+const cors = require('cors')
 const connection = require('./database/connection.js')
-const { request, response } = require('express')
+// const { request } = require('express')
 // const jwt = require('jsonwebtoken')
 const router = express.Router()
 
 router.use(
   express.json(),
+  cors(),
+  express.urlencoded({ extended: true }),
   express.static('build'),
   (req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*')
@@ -133,25 +136,21 @@ router.post('/api/products', async (req, res) => {
 })
 
 // Customer login
-router.post('api/auth/signin', (req, res, next) => {
+router.post('/api/auth/signin', async (req, res, next) => {
   try {
     const email = req.body.email
     const password = req.body.password
-    connection.query('SELECT * FROM customers WHERE email = ? AND password = ?', [email, password],
-      function (error, results, fields) {
-        if (error) throw error
-        if (results.length <= 0) {
-          req.flash('ERROR', 'Wrong email or password')
-        } else {
-          request.session.loggedin = true
-          request.session.name = email
-          res.status(200).send({ msg: 'Logged in!', token: 'test123' }) // Token used for saving session login
-        }
-        response.end()
-      }
-    )
+    const results = await connection.customerLogin(email, password)
+    if (results.length <= 0) {
+      console.log(res.status(404).send('User not found'))
+    } else {
+      // request.session.loggedin = true
+      // request.session.name = email
+      res.status(200).send({ msg: 'Logged in!', token: 'test123' }) // Token used for saving session login
+    }
   } catch (error) {
     res.status(500).send(error)
+    console.log(error)
   }
 })
 
