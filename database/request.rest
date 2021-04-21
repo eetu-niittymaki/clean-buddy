@@ -1,0 +1,21 @@
+// Install REST Client extension to VSC if you don't have it.
+
+GET http://localhost:8080/api/customers HTTP/1.1
+
+###
+
+POST http://localhost:8080/api/customers/  HTTP/1.1
+Content-Type: application/json
+
+{
+    "first_name": "Volter",
+    "last_name": "Kilpi",
+    "street_address": "Tääonmunkoti 2",
+    "city": "Kustavi",
+    "postcode": "12345",
+    "phone": "612333351",
+    "email": "example@example.com",
+    "password": "Karhumäki"
+}
+
+###

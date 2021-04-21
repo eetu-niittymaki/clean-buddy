@@ -7,7 +7,6 @@ const router = express.Router()
 
 router.use(
   express.json(),
-  express.urlencoded({ extended: true }),
   express.static('build'),
   (req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*')
@@ -43,7 +42,7 @@ router.get('/api/customers', async (req, res) => {
 })
 
 // Get customers
-router.get('/api/products', async (req, res) => {
+router.get('/api/products/', async (req, res) => {
   try {
     const results = await connection.getProducts()
     await res.status(200).send(results)
@@ -53,7 +52,7 @@ router.get('/api/products', async (req, res) => {
 })
 
 // Get suppliers
-router.get('/api/suppliers', async (req, res) => {
+router.get('/api/suppliers/', async (req, res) => {
   try {
     const results = await connection.getSuppliers()
     await res.status(200).send(results)
@@ -63,7 +62,7 @@ router.get('/api/suppliers', async (req, res) => {
 })
 
 // Add customer
-router.post('/api/customers', async (req, res) => {
+router.post('/api/customers/', async (req, res) => {
   try {
     const firstName = req.body.first_name
     const lastName = req.body.last_name
@@ -93,10 +92,10 @@ router.post('/api/customers', async (req, res) => {
 router.post('/api/suppliers', async (req, res) => {
   try {
     const name = req.body.name
-    const supplierDescription = req.body.suppleir_description
+    const supplierDescription = req.body.supplier_description
     const streetAddress = req.body.street_address
     const city = req.body.city
-    const postcode = req.body.postcodde
+    const postcode = req.body.postcode
     const phone = req.body.phone
     const email = req.body.email
     const password = req.body.password

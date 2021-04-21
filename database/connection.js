@@ -1,5 +1,5 @@
 const mysql = require('mysql')
-const config = require('./config.js')
+const config = require('./config copy.js')
 
 const connection = mysql.createPool(config)
 
@@ -18,9 +18,9 @@ class ConnectionFunctions {
   static getCustomers () {
     return new Promise((resolve, reject) => {
       if (connection) {
-        connection.query('SELECT * FROM customers', (err, task) => {
+        connection.query('SELECT * FROM customers', (err, customers) => {
           if (err) throw (err)
-          resolve(task)
+          resolve(customers)
         })
       } else {
         reject(Error)
@@ -35,9 +35,9 @@ class ConnectionFunctions {
         connection.query(`SELECT name, product_name, product_description, product_price
                           FROM products
                           INNER JOIN suppliers
-                          ON product_id = suppliers.supplier_id`, (err, task) => {
+                          ON product_id = suppliers.supplier_id`, (err, products) => {
           if (err) throw (err)
-          resolve(task)
+          resolve(products)
         })
       } else {
         reject(Error)
@@ -49,9 +49,9 @@ class ConnectionFunctions {
   static getSuppliers () {
     return new Promise((resolve, reject) => {
       if (connection) {
-        connection.query('SELECT name, phone, email FROM suppliers', (err, task) => {
+        connection.query('SELECT name, phone, email FROM suppliers', (err, suppliers) => {
           if (err) throw (err)
-          resolve(task)
+          resolve(suppliers)
         })
       } else {
         reject(Error)
@@ -63,16 +63,18 @@ class ConnectionFunctions {
   static saveCustomer (firstName, lastName, streetAddress, city, postcode, phone, email, password) {
     return new Promise((resolve, reject) => {
       if (connection) {
-        const sql = `INSERT INTO customers (${connection.escape(firstName)},
-                                            ${connection.escape(lastName)}, 
-                                            ${connection.escape(streetAddress)}, 
-                                            ${connection.escape(city)}, 
-                                            ${connection.escape(postcode)}, 
-                                            ${connection.escape(phone)}, 
-                                            ${connection.escape(email)}, 
-                                            ${connection.escape(password)})`
-        connection.query(sql, () => {
-          resolve('Added customer to database ')
+        const sql = `INSERT INTO customers (first_name, last_name, street_address, city, postcode, phone, email, password)
+                     VALUES(${connection.escape(firstName)},
+                            ${connection.escape(lastName)}, 
+                            ${connection.escape(streetAddress)}, 
+                            ${connection.escape(city)}, 
+                            ${connection.escape(postcode)}, 
+                            ${connection.escape(phone)}, 
+                            ${connection.escape(email)}, 
+                            ${connection.escape(password)})`
+        connection.query(sql, (err, customer) => {
+          if (err) throw (err)
+          resolve(`Added customer ${firstName} ${lastName} to database`)
         })
       } else {
         reject(Error)
@@ -92,8 +94,9 @@ class ConnectionFunctions {
                                             ${connection.escape(phone)}, 
                                             ${connection.escape(email)}, 
                                             ${connection.escape(password)})`
-        connection.query(sql, () => {
-          resolve('Added supplier to database ')
+        connection.query(sql, (err, supplier) => {
+          if (err) throw (err)
+          resolve(`Added ${supplier} to database`)
         })
       } else {
         reject(Error)
@@ -106,10 +109,11 @@ class ConnectionFunctions {
     return new Promise((resolve, reject) => {
       if (connection) {
         const sql = `INSERT INTO products (${connection.escape(productName)},
-                                            ${connection.escape(productDescription)}, 
-                                            ${connection.escape(productPrice)})`
-        connection.query(sql, () => {
-          resolve('Added product to database ')
+                                           ${connection.escape(productDescription)}, 
+                                           ${connection.escape(productPrice)})`
+        connection.query(sql, (err, product) => {
+          if (err) throw (err)
+          resolve(`Added ${product} to database`)
         })
       } else {
         reject(Error)
@@ -120,4 +124,8 @@ class ConnectionFunctions {
 
 module.exports = ConnectionFunctions
 
-// curl -X POST 'first_name=Pekka&last_name=PEKKA&address=koti&phone=23124145&email=asda@dd.häh' http://localhost:8080/api
+// curl -X POST 'first_name=Pekka&last_name=PEKKA&street_address=koti&city=TAMPERE&postcode=33310&phone=23124145&email=asda@dd.häh' localhost:8080/api/customers
+
+/*
+curl -i -X POST -d "{"first_name": "Jukka", "last_name": "Kukkula", "street_address": "Sukkatie 5", "city": "Tampere", "postcode": "33100", "phone": "05066666618", "email": "jukansukka@gmail.com", "password": "sukka123"}" -H "Content-type:application/json"
+*/
