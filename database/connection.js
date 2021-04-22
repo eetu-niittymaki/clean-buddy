@@ -130,7 +130,7 @@ class ConnectionFunctions {
           resolve(login)
         })
       } else {
-        reject(Error)
+        reject(Error('User not found'))
       }
     })
   }
