@@ -49,7 +49,7 @@ class ConnectionFunctions {
   static getSuppliers () {
     return new Promise((resolve, reject) => {
       if (connection) {
-        connection.query('SELECT name, street_address, city, postcode, phone, email FROM suppliers', (err, suppliers) => {
+        connection.query('SELECT supplier_id, name, street_address, city, postcode, phone, email FROM suppliers', (err, suppliers) => {
           if (err) throw (err)
           resolve(suppliers)
         })
