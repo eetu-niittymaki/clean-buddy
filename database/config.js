@@ -1,9 +1,9 @@
 const config = {
   connectionLimit: 10,
   host: 'mydb.tamk.fi',
-  user: process.env.user,
-  password: process.env.password,
-  database: process.env.database
+  user: process.env.USER,
+  password: process.env.PASSWORD,
+  database: process.env.DATABASE
 }
 
 module.exports = config
