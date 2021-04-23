@@ -86,14 +86,15 @@ class ConnectionFunctions {
   static saveSupplier (name, supplierDescription, streetAddress, city, postcode, phone, email, password) {
     return new Promise((resolve, reject) => {
       if (connection) {
-        const sql = `INSERT INTO suppliers (${connection.escape(name)},
-                                            ${connection.escape(supplierDescription)},
-                                            ${connection.escape(streetAddress)}, 
-                                            ${connection.escape(city)}, 
-                                            ${connection.escape(postcode)}, 
-                                            ${connection.escape(phone)}, 
-                                            ${connection.escape(email)}, 
-                                            ${connection.escape(password)})`
+        const sql = `INSERT INTO suppliers (name, supplier_description, street_address, city, postcode, phone, email, password)
+                     VALUES(${connection.escape(name)},
+                            ${connection.escape(supplierDescription)},
+                            ${connection.escape(streetAddress)}, 
+                            ${connection.escape(city)}, 
+                            ${connection.escape(postcode)}, 
+                            ${connection.escape(phone)}, 
+                            ${connection.escape(email)}, 
+                            ${connection.escape(password)})`
         connection.query(sql, (err, supplier) => {
           if (err) throw (err)
           resolve(`Added ${supplier} to database`)
@@ -108,9 +109,10 @@ class ConnectionFunctions {
   static saveProduct (productName, productDescription, productPrice) {
     return new Promise((resolve, reject) => {
       if (connection) {
-        const sql = `INSERT INTO products (${connection.escape(productName)},
-                                           ${connection.escape(productDescription)}, 
-                                           ${connection.escape(productPrice)})`
+        const sql = `INSERT INTO products (product_name, product_description, product_price)
+                     VALUES(${connection.escape(productName)},
+                            ${connection.escape(productDescription)}, 
+                            ${connection.escape(productPrice)})`
         connection.query(sql, (err, product) => {
           if (err) throw (err)
           resolve(`Added ${product} to database`)
