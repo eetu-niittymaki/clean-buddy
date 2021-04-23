@@ -150,10 +150,10 @@ router.post('/api/auth/signin', async (req, res) => {
       res.status(204).send('User not found')
     } else {
       const token = generateAccessToken({ username: email })
-      res.json(token)
+      const jsonToken = res.json(token)
       req.session.loggedin = true // Logs user into session
       req.session.username = email // Session name
-      res.status(200).send({ msg: 'Logged in!', token: 'test123' }) // Token used for saving session login
+      res.status(200).send({ msg: 'Logged in!', token: jsonToken }) // Token used for saving session login
     }
   } catch (error) {
     res.status(500).send(error)
