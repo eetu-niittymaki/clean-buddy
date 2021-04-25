@@ -122,6 +122,20 @@ class ConnectionFunctions {
       }
     })
   }
+
+  static customerLogin (email, password) {
+    return new Promise((resolve, reject) => {
+      if (connection) {
+        const sql = `SELECT * FROM customers WHERE email = ${connection.escape(email)} AND password = ${connection.escape(password)}`
+        connection.query(sql, (err, login) => {
+          if (err) throw (err)
+          resolve(login)
+        })
+      } else {
+        reject(Error('User not found'))
+      }
+    })
+  }
 }
 
 module.exports = ConnectionFunctions

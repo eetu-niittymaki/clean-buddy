@@ -1,13 +1,17 @@
 const express = require('express')
 const session = require('express-session')
+const cors = require('cors')
 const connection = require('./database/connection.js')
-const { request, response } = require('express')
-// const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken')
 const router = express.Router()
 const path = require('path')
+const dotenv = require('dotenv')
+dotenv.config()
 
 router.use(
   express.json(),
+  cors(),
+  express.urlencoded({ extended: true }),
   express.static('build'),
   (req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*')
@@ -27,10 +31,14 @@ router.get('*', function (req, res) {
 router.use(
   session({
     secret: 'secret',
-    resave: false,
+    resave: true,
     saveUninitialized: true
   })
 )
+
+const generateAccessToken = (username) => {
+  return jwt.sign(username, process.env.SECRET_TOKEN, { expiresIn: '1800s' })
+}
 
 // Get customers
 router.get('/api/customers', async (req, res) => {
@@ -134,27 +142,26 @@ router.post('/api/products', async (req, res) => {
 })
 
 // Customer login
-router.post('api/auth/signin', (req, res, next) => {
+router.post('/api/auth/signin', async (req, res) => {
   try {
     const email = req.body.email
     const password = req.body.password
-    connection.query('SELECT * FROM customers WHERE email = ? AND password = ?', [email, password],
-      function (error, results, fields) {
-        if (error) throw error
-        if (results.length <= 0) {
-          req.flash('ERROR', 'Wrong email or password')
-        } else {
-          request.session.loggedin = true
-          request.session.name = email
-          res.status(200).send({ msg: 'Logged in!', token: 'test123' }) // Token used for saving session login
-        }
-        response.end()
-      }
-    )
+    const results = await connection.customerLogin(email, password)
+    if (results.length <= 0) { // No user in db
+      res.status(204).send('User not found')
+    } else {
+      const token = generateAccessToken({ username: email })
+      const jsonToken = res.json(token)
+      req.session.loggedin = true // Logs user into session
+      req.session.username = email // Session name
+      res.status(200).send({ msg: 'Logged in!', token: jsonToken }) // Token used for saving session login
+    }
   } catch (error) {
     res.status(500).send(error)
+    console.log(error)
   }
 })
+
 router.get('*', function (req, res) {
   res.sendFile(path.resolve('./build/index.html'))
 })
