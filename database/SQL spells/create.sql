@@ -90,7 +90,7 @@ CREATE TABLE timed_offers(
 );
 
 INSERT INTO customers (first_name, last_name, street_address, city, postcode, phone, email, password)
-VALUES ("Pasi", "Virtanen", "Kotikatu 3 A", "Tampere", "33310", "+42312231", "email@email.com", "salsasana");
+VALUES ("Pekka", "Hmmm", "Munkoti", "Lohja", "54321", "+42231231", "mä@hä.fi", "911WasAnInsideJob");
 
 --Get database table filesizes
 SELECT table_schema AS "Database", SUM(data_length + index_length) / 1024 / 1024 AS "Size (MB)" FROM information_schema.TABLES GROUP BY table_schema
