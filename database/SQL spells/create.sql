@@ -29,7 +29,7 @@ CREATE TABLE suppliers(
 CREATE TABLE products(
     product_id INT AUTO_INCREMENT,
     supplier_id INT,
-    product_name VARCHAR(45) UNIQUE,
+    product_name VARCHAR(45),
     product_description VARCHAR(255),
     product_price DECIMAL(15, 3),
     PRIMARY KEY (product_id),
@@ -78,6 +78,7 @@ CREATE TABLE supplier_reviews(
         ON UPDATE RESTRICT ON DELETE CASCADE
 );
 
+/*
 CREATE TABLE timed_offers(
     offer_id INT,
     product_id INT,
@@ -87,6 +88,24 @@ CREATE TABLE timed_offers(
     FOREIGN KEY (product_id)
         REFERENCES products (product_id)
         ON UPDATE RESTRICT ON DELETE CASCADE
+);
+*/
+
+CREATE TABLE offer_requests(
+    request_id INT AUTO_INCREMENT,
+    apartment_type VARCHAR(255) NOT NULL,
+    apartment_area DECIMAL(15,2) NOT NULL,
+    cleaning_frequency VARCHAR(255) NOT NULL,
+    request_suppliers VARCHAR(255) NOT NULL,
+    optonal_information VARCHAR(255),
+    first_name VARCHAR(45) NOT NULL,
+    last_name VARCHAR(45) NOT NULL,
+    street_address VARCHAR(255) NOT NULL,
+    city VARCHAR(255) NOT NULL,
+    postcode VARCHAR(255) NOT NULL,
+    phone VARCHAR(45) NOT NULL,
+    email VARCHAR(45) NOT NULL,
+    PRIMARY KEY (request_id)
 );
 
 INSERT INTO customers (first_name, last_name, street_address, city, postcode, phone, email, password)
