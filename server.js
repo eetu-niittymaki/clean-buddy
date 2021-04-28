@@ -141,6 +141,52 @@ router.post('/api/products', async (req, res) => {
   }
 })
 
+// Add offer request
+router.post('/api/offer-requests', async (req, res) => {
+  try {
+    const apartmentType = req.body.apartment_type
+    const apartmentArea = req.body.apartment_area
+    const cleaningFrequency = req.body.cleaning_frequency
+    const requestSuppliers = req.body.request_suppliers
+    const optionalInformation = req.body.optional_information
+    const firstName = req.body.first_name
+    const lastName = req.body.last_name
+    const streetAddress = req.body.street_address
+    const city = req.body.city
+    const postcode = req.body.postcode
+    const phone = req.body.phone
+    const email = req.body.email
+    const results = await connection.saveOfferRequest(
+      apartmentType,
+      apartmentArea,
+      cleaningFrequency,
+      requestSuppliers,
+      optionalInformation,
+      firstName,
+      lastName,
+      streetAddress,
+      city,
+      postcode,
+      phone,
+      email
+    )
+    await res.status(201).send(results)
+  } catch (error) {
+    res.status(400).send(error)
+  }
+})
+
+// Get company specific offer requests
+router.get('/api/offer-requests', async (req, res) => {
+  try {
+    const supplier = req.query.supplier
+    const results = await connection.getCompanyOfferRequests(supplier)
+    await res.status(200).send(results)
+  } catch (error) {
+    res.status(404).send(error)
+  }
+})
+
 // Customer login
 router.post('/api/auth/signin', async (req, res) => {
   try {

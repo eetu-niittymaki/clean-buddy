@@ -97,7 +97,7 @@ CREATE TABLE offer_requests(
     apartment_area DECIMAL(15,2) NOT NULL,
     cleaning_frequency VARCHAR(255) NOT NULL,
     request_suppliers VARCHAR(255) NOT NULL,
-    optonal_information VARCHAR(255),
+    optional_information VARCHAR(255),
     first_name VARCHAR(45) NOT NULL,
     last_name VARCHAR(45) NOT NULL,
     street_address VARCHAR(255) NOT NULL,

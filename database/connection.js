@@ -1,5 +1,5 @@
 const mysql = require('mysql')
-const config = require('./config.js')
+const config = require('./config copy.js')
 
 const connection = mysql.createPool(config)
 
@@ -32,10 +32,7 @@ class ConnectionFunctions {
   static getProducts () {
     return new Promise((resolve, reject) => {
       if (connection) {
-        connection.query(`SELECT name, product_name, product_description, product_price
-                          FROM products
-                          INNER JOIN suppliers
-                          ON product_id = suppliers.supplier_id`, (err, products) => {
+        connection.query('SELECT * From products', (err, products) => {
           if (err) throw (err)
           resolve(products)
         })
@@ -115,7 +112,71 @@ class ConnectionFunctions {
                               ${connection.escape(productPrice)})`
         connection.query(sql, (err, product) => {
           if (err) throw (err)
-          resolve(`Added ${product} to database`)
+          resolve(`Added ${productName} to database`)
+        })
+      } else {
+        reject(Error)
+      }
+    })
+  }
+
+  // Add offer request to DB
+  static saveOfferRequest (
+    apartmentType,
+    apartmentArea,
+    cleaningFrequency,
+    requestSuppliers,
+    optionalInformation,
+    firstName,
+    lastName,
+    streetAddress,
+    city,
+    postcode,
+    phone,
+    email) {
+    return new Promise((resolve, reject) => {
+      if (connection) {
+        const sql = `INSERT INTO offer_requests (apartment_type,
+                                                 apartment_area,
+                                                 cleaning_frequency,
+                                                 request_suppliers,
+                                                 optional_information,
+                                                 first_name,
+                                                 last_name,
+                                                 street_address,
+                                                 city,
+                                                 postcode,
+                                                 phone,
+                                                 email)
+                      VALUES (${connection.escape(apartmentType)},
+                              ${connection.escape(apartmentArea)}, 
+                              ${connection.escape(cleaningFrequency)},
+                              ${connection.escape(requestSuppliers)},
+                              ${connection.escape(optionalInformation)},
+                              ${connection.escape(firstName)},
+                              ${connection.escape(lastName)},
+                              ${connection.escape(streetAddress)},
+                              ${connection.escape(city)},
+                              ${connection.escape(postcode)},
+                              ${connection.escape(phone)},
+                              ${connection.escape(email)})`
+        connection.query(sql, (err, offerRequest) => {
+          if (err) throw (err)
+          resolve('Addes offer request to database')
+        })
+      } else {
+        reject(Error)
+      }
+    })
+  }
+
+  // GET company specific offer requests
+  static getCompanyOfferRequests (supplier) {
+    return new Promise((resolve, reject) => {
+      if (connection) {
+        connection.query(`SELECT * FROM offer_requests WHERE request_suppliers LIKE '%${supplier}%'`, (err, offerSupplier) => {
+          if (err) throw (err)
+          resolve(offerSupplier)
         })
       } else {
         reject(Error)

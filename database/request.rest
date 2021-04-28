@@ -1,21 +1,56 @@
 // Install REST Client extension to VSC if you don't have it.
 
-GET http://localhost:8080/api/customers HTTP/1.1
+GET http://localhost:8080/api/products HTTP/1.1
 
 ###
 
-POST http://localhost:8080/api/customers/  HTTP/1.1
+POST http://localhost:8080/api/customers  HTTP/1.1
 Content-Type: application/json
 
 {
-    "first_name": "Volter",
-    "last_name": "Kilpi",
-    "street_address": "Tääonmunkoti 2",
-    "city": "Kustavi",
-    "postcode": "12345",
-    "phone": "612333351",
-    "email": "example@example.com",
-    "password": "Karhumäki"
+    "first_name": "Jaska",
+    "last_name": "Jalmari",
+    "street_address": "ABCDFAS",
+    "city": "Helsinki",
+    "postcode": "12312312",
+    "phone": "612312451",
+    "email": "aa@bb.fi",
+    "password": null
+}
+
+###
+
+POST http://localhost:8080/api/products  HTTP/1.1
+Content-Type: application/json
+
+{
+    "product_name": "Mä tuun siivoon",
+    "product_description": "Siivoon",
+    "product_price": 2.50
+}
+
+###
+
+GET http://localhost:8080/api/offer-requests?supplier= HTTP/1.1
+
+###
+
+POST http://localhost:8080/api/offer-requests  HTTP/1.1
+Content-Type: application/json
+
+{
+    "apartment_type": "talo",
+    "apartment_area": 38.5,
+    "cleaning_frequency": "joka toinen päevä",
+    "request_suppliers": "Petri",
+    "optional_information": null,
+    "first_name": "Juuso",
+    "last_name": "Heinz",
+    "street_address": ":)",
+    "city": "Tre",
+    "postcode": "23123",
+    "phone": "33331111111",
+    "email": "joo@joo.org"
 }
 
 ###
