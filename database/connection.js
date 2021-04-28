@@ -1,5 +1,5 @@
 const mysql = require('mysql')
-const config = require('./config.js')
+const config = require('./config copy.js')
 
 const connection = mysql.createPool(config)
 
