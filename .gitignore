@@ -1,3 +1,4 @@
 node_modules
 database/config copy.js
-node_modules
+.env
+build_old
