@@ -31,7 +31,11 @@ CREATE TABLE products(
     supplier_id INT,
     product_name VARCHAR(45),
     product_description VARCHAR(255),
-    product_price DECIMAL(15, 3),
+    product_price DECIMAL(15,3),
+    created_at TIMESTAMP NOT NULL,
+    ends_at DATE NOT NULL,
+    work_hours DECIMAL(15,3) NOT NULL,
+    product_is_available BOOLEAN NOT NULL,
     PRIMARY KEY (product_id),
     FOREIGN KEY (supplier_id)
         REFERENCES suppliers (supplier_id)

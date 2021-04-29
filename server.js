@@ -127,13 +127,21 @@ router.post('/api/suppliers', async (req, res) => {
 // Add product
 router.post('/api/products', async (req, res) => {
   try {
+    const supplierId = req.body.supplier_id
     const productName = req.body.product_name
     const productDescription = req.body.product_description
     const productPrice = req.body.product_price
+    const endsAt = req.body.ends_at
+    const workHours = req.body.work_hours
+    const isAvailable = req.body.is_available
     const results = await connection.saveProduct(
+      supplierId,
       productName,
       productDescription,
-      productPrice
+      productPrice,
+      endsAt,
+      workHours,
+      isAvailable
     )
     await res.status(201).send(results)
   } catch (error) {

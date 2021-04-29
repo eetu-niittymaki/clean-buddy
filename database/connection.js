@@ -105,13 +105,29 @@ class ConnectionFunctions {
   }
 
   // Add product to DB
-  static saveProduct (productName, productDescription, productPrice) {
+  static saveProduct (
+    supplierId,
+    productName,
+    productDescription,
+    productPrice,
+    endsAt,
+    workHours,
+    isAvailable) {
     return new Promise((resolve, reject) => {
       if (connection) {
-        const sql = `INSERT INTO products (product_name, product_description, product_price)
-                      VALUES (${connection.escape(productName)},
+        const sql = `INSERT INTO products(supplier_id, 
+                                          product_name, 
+                                          product_description, 
+                                          product_price,
+                                          ends_at,
+                                          work_hours)
+                      VALUES (${connection.escape(supplierId)}
+                              ${connection.escape(productName)},
                               ${connection.escape(productDescription)}, 
-                              ${connection.escape(productPrice)})`
+                              ${connection.escape(productPrice)},
+                              ${connection.escape(endsAt)},
+                              ${connection.escape(workHours)})
+                      SET product_is_available = ${connection.escape(isAvailable)}`
         connection.query(sql, (err, product) => {
           if (err) throw (err)
           resolve(`Added ${productName} to database`)
