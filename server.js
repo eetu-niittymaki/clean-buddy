@@ -2,7 +2,7 @@ const express = require('express')
 const session = require('express-session')
 const cors = require('cors')
 const connection = require('./database/connection.js')
-const jwt = require('jsonwebtoken')
+// const jwt = require('jsonwebtoken')
 const router = express.Router()
 const path = require('path')
 const dotenv = require('dotenv')
@@ -36,9 +36,11 @@ router.use(
   })
 )
 
+/*
 const generateAccessToken = (username) => {
   return jwt.sign(username, process.env.SECRET_TOKEN, { expiresIn: '1800s' })
 }
+*/
 
 // Get customers
 router.get('/api/customers', async (req, res) => {
@@ -196,11 +198,11 @@ router.post('/api/auth/signin', async (req, res) => {
     if (results.length <= 0) { // No user in db
       await res.status(204).send('User not found')
     } else {
-      const token = generateAccessToken({ username: email })
-      const jsonToken = res.json(token)
+      // const token = generateAccessToken({ username: email })
+      // const jsonToken = res.json(token)
       req.session.loggedin = true // Logs user into session
       req.session.username = email // Session name
-      await res.status(200).send({ msg: 'Logged in!', token: jsonToken }) // Token used for saving session login
+      await res.status(200).send({ msg: 'Logged in!', token: 'secret123' }) // Token used for saving session login
     }
   } catch (error) {
     res.status(500).send(error)
