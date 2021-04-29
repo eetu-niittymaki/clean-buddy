@@ -1,3 +1,5 @@
+const dotenv = require('dotenv')
+dotenv.config()
 const mysql = require('mysql')
 const config = require('./config.js')
 
