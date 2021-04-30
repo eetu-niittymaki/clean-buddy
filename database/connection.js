@@ -120,14 +120,15 @@ class ConnectionFunctions {
                                           product_description, 
                                           product_price,
                                           ends_at,
-                                          work_hours)
+                                          work_hours,
+                                          product_is_available)
                       VALUES (${connection.escape(supplierId)}
                               ${connection.escape(productName)},
                               ${connection.escape(productDescription)}, 
                               ${connection.escape(productPrice)},
                               ${connection.escape(endsAt)},
-                              ${connection.escape(workHours)})
-                      SET product_is_available = ${connection.escape(isAvailable)}`
+                              ${connection.escape(workHours)}),
+                              ${connection.escape(isAvailable)}`
         connection.query(sql, (err, product) => {
           if (err) throw (err)
           resolve(`Added ${productName} to database`)
