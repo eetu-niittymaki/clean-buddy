@@ -1,12 +1,12 @@
+require('dotenv').config()
 const express = require('express')
 const session = require('express-session')
 const cors = require('cors')
+const bcrypt = require('bcrypt')
 const connection = require('./database/connection.js')
 const jwt = require('jsonwebtoken')
 const router = express.Router()
 const path = require('path')
-const dotenv = require('dotenv')
-dotenv.config()
 
 router.use(
   express.json(),
@@ -30,7 +30,7 @@ router.get('*', function (req, res) {
 
 router.use(
   session({
-    secret: 'secret',
+    secret: process.env.SESSION_SECRET,
     resave: true,
     saveUninitialized: true
   })
@@ -73,6 +73,9 @@ router.get('/api/suppliers/', async (req, res) => {
 // Add customer
 router.post('/api/customers/', async (req, res) => {
   try {
+    const salt = await bcrypt.genSalt(10)
+    const hashedPassword = await bcrypt.hash(req.body.password, salt)
+
     const firstName = req.body.first_name
     const lastName = req.body.last_name
     const streetAddress = req.body.street_address
@@ -80,7 +83,7 @@ router.post('/api/customers/', async (req, res) => {
     const postcode = req.body.postcode
     const phone = req.body.phone
     const email = req.body.email
-    const password = req.body.password
+    const password = (req.body.password !== null) ? hashedPassword : null
     const results = await connection.saveCustomer(
       firstName,
       lastName,
@@ -200,19 +203,20 @@ router.post('/api/auth/signin', async (req, res) => {
   try {
     const email = req.body.email
     const password = req.body.password
-    const results = await connection.customerLogin(email, password)
-    if (results.length <= 0) { // No user in db
-      await res.status(204).send('User not found')
-    } else {
+    const results = await connection.customerLogin(email)
+    const compare = bcrypt.compare(password, results[0].password)
+    if (compare) {
       const token = generateAccessToken({ username: email })
       const jsonToken = res.json(token)
       req.session.loggedin = true // Logs user into session
       req.session.username = email // Session name
-      await res.status(200).send({ msg: 'Logged in!', token: jsonToken }) // Token used for saving session login
+      res.status(200).send({ msg: 'Logged in!', token: jsonToken, customer_id: results[0].customer_id }) // Token used for saving session login
+    } else {
+      res.status(204).send('Wrong email/password!')
     }
   } catch (error) {
     res.status(500).send(error)
-    console.log(error)
+    // console.log(error)
   }
 })
 

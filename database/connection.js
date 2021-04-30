@@ -202,13 +202,13 @@ class ConnectionFunctions {
     })
   }
 
-  static customerLogin (email, password) {
+  static customerLogin (email) {
     return new Promise((resolve, reject) => {
       if (connection) {
-        const sql = `SELECT * FROM customers WHERE email = ${connection.escape(email)} AND password = ${connection.escape(password)}`
-        connection.query(sql, (err, login) => {
+        const sql = `SELECT * FROM customers WHERE email = ${connection.escape(email)}`
+        connection.query(sql, (err, results) => {
           if (err) throw (err)
-          resolve(login)
+          resolve(results)
         })
       } else {
         reject(Error('User not found'))
