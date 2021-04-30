@@ -205,14 +205,14 @@ router.post('/api/auth/signin', async (req, res) => {
     const password = req.body.password
     const results = await connection.customerLogin(email)
     const compare = bcrypt.compare(password, results[0].password)
-    if (compare) {
+    if (!compare) {
+      res.status(204).send('Wrong email/password!')
+    } else {
       const token = generateAccessToken({ username: email })
       const jsonToken = res.json(token)
       req.session.loggedin = true // Logs user into session
       req.session.username = email // Session name
       res.status(200).send({ msg: 'Logged in!', token: jsonToken, customer_id: results[0].customer_id }) // Token used for saving session login
-    } else {
-      res.status(204).send('Wrong email/password!')
     }
   } catch (error) {
     res.status(500).send(error)

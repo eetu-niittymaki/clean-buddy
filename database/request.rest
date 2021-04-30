@@ -1,6 +1,6 @@
 // Install REST Client extension to VSC if you don't have it.
 
-GET http://localhost:8080/api/customers HTTP/1.1
+GET http://localhost:8080/api/products HTTP/1.1
 
 ###
 
@@ -33,10 +33,13 @@ Content-Type: application/json
 POST http://localhost:8080/api/products  HTTP/1.1
 Content-Type: application/json
 
-{
+{   "supplier_id": 2,
     "product_name": "Mä tuun siivoon",
     "product_description": "Siivoon",
-    "product_price": 2.50
+    "product_price": 2.50,
+    "ends_at": null,
+    "work_hours": 2,
+    "is_available": true
 }
 
 ###
