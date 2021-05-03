@@ -106,7 +106,7 @@ class ConnectionFunctions {
 
   // Add product to DB
   static saveProduct (
-    supplierId,
+    supplierName,
     productName,
     productDescription,
     productPrice,
@@ -115,20 +115,16 @@ class ConnectionFunctions {
     isAvailable) {
     return new Promise((resolve, reject) => {
       if (connection) {
-        const sql = `INSERT INTO products(supplier_id, 
-                                          product_name, 
-                                          product_description, 
-                                          product_price,
-                                          ends_at,
-                                          work_hours,
-                                          product_is_available)
-                      VALUES (${connection.escape(supplierId)},
-                              ${connection.escape(productName)},
-                              ${connection.escape(productDescription)}, 
-                              ${connection.escape(productPrice)},
-                              ${connection.escape(endsAt)},
-                              ${connection.escape(workHours)},
-                              ${connection.escape(isAvailable)})`
+        const sql = `INSERT INTO products 
+                      SET supplier_id = (SELECT supplier_id 
+                                         FROM suppliers
+                                         WHERE name = ${connection.escape(supplierName)}), 
+                          product_name =         ${connection.escape(productName)}, 
+                          product_description =  ${connection.escape(productDescription)}, 
+                          product_price =        ${connection.escape(productPrice)},
+                          ends_at =              ${connection.escape(endsAt)},
+                          work_hours =           ${connection.escape(workHours)},
+                          product_is_available = ${connection.escape(isAvailable)}`
         connection.query(sql, (err, product) => {
           if (err) throw (err)
           resolve(`Added ${productName} to database`)
