@@ -199,6 +199,64 @@ class ConnectionFunctions {
     })
   }
 
+  static updateCustomer () {
+    return new Promise((resolve, reject) => {
+      if (connection) {
+        const sql = `UPDATE customers 
+                      SET`
+        connection.query(sql, (err, results) => {
+          if (err) throw (err)
+          resolve(results)
+        })
+      } else {
+        reject(Error)
+      }
+    })
+  }
+
+  static updateSupplier () {
+    return new Promise((resolve, reject) => {
+      if (connection) {
+        const sql = `UPDATE supplier 
+                      SET`
+        connection.query(sql, (err, results) => {
+          if (err) throw (err)
+          resolve(results)
+        })
+      } else {
+        reject(Error)
+      }
+    })
+  }
+
+  static deleteCustomer (id) {
+    return new Promise((resolve, reject) => {
+      if (connection) {
+        const sql = `DELETE FROM customers WHERE customer_id = ${connection.escape(id)}`
+        connection.query(sql, (err, results) => {
+          if (err) throw (err)
+          resolve(results)
+        })
+      } else {
+        reject(Error)
+      }
+    })
+  }
+
+  static deleteSupplier (id) {
+    return new Promise((resolve, reject) => {
+      if (connection) {
+        const sql = `DELETE FROM suppliers WHERE supplier_id = ${connection.escape(id)}`
+        connection.query(sql, (err, results) => {
+          if (err) throw (err)
+          resolve(results)
+        })
+      } else {
+        reject(Error)
+      }
+    })
+  }
+
   static customerLogin (email) {
     return new Promise((resolve, reject) => {
       if (connection) {

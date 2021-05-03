@@ -187,6 +187,48 @@ router.post('/api/offer-requests', async (req, res) => {
   }
 })
 
+// UPDATE customer
+router.put('/api/customers', async (req, res) => {
+  try {
+    const results = await connection.updateCustomer()
+    await res.status(201).send(results)
+  } catch (error) {
+    console.log(error)
+  }
+})
+
+// UPDATE supplier
+router.put('/api/suppliers', async (req, res) => {
+  try {
+    const results = await connection.updateSupplier()
+    await res.status(201).send(results)
+  } catch (error) {
+    console.log(error)
+  }
+})
+
+// DELETE customer
+router.delete('/api/customers/:id([0-9]+)', async (req, res) => {
+  try {
+    const id = Number(req.params.id)
+    const results = await connection.deleteCustomer(id)
+    res.status(200).send(results)
+  } catch (error) {
+    res.status(404).send(error)
+  }
+})
+
+// DELETE supplier
+router.delete('/api/suppliers/:id([0-9]+)', async (req, res) => {
+  try {
+    const id = Number(req.params.id)
+    const results = await connection.deleteSupplier(id)
+    res.status(200).send(results)
+  } catch (error) {
+    res.status(404).send(error)
+  }
+})
+
 // Get company specific offer requests
 router.get('/api/offer-requests', async (req, res) => {
   try {
