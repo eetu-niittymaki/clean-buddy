@@ -115,5 +115,20 @@ CREATE TABLE offer_requests(
 INSERT INTO customers (first_name, last_name, street_address, city, postcode, phone, email, password)
 VALUES ("Pekka", "Hmmm", "Munkoti", "Lohja", "54321", "+42231231", "mä@hä.fi", "911WasAnInsideJob");
 
+
+INSERT INTO orders
+SET customer_id = (SELECT customer_id FROM customers
+                    WHERE phone = customerPhone
+                    AND   email = customerEmail)
+INSERT INTO order_items
+SET order_id = (SELECT order_id FROM orders
+                WHERE order_id = orderIdIn),
+    product_id = (SELECT product_id products
+                  WHERE product_name = productNameIn),
+    quantity = quantityIn,
+    total_price = ((SELECT product_price FROM products 
+                    WHERE product_name = productNameIn) * quantityIn));
+
+
 --Get database table filesizes
 SELECT table_schema AS "Database", SUM(data_length + index_length) / 1024 / 1024 AS "Size (MB)" FROM information_schema.TABLES GROUP BY table_schema

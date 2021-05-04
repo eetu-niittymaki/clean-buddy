@@ -187,12 +187,51 @@ router.post('/api/offer-requests', async (req, res) => {
   }
 })
 
+// POST order
+router.post('/api/orders', async (req, res) => {
+  try {
+    const customerPhone = req.body.customer_phone
+    const customerEmail = req.body.customer_email
+    const orderIdIn = req.body.order_id_in
+    const productNameIn = req.body.product_name_in
+    const quantityIn = req.body.quantity_in
+    const results = await connection.saveOrder(
+      customerPhone,
+      customerEmail,
+      orderIdIn,
+      productNameIn,
+      quantityIn
+    )
+    res.status(201).send(results)
+  } catch (error) {
+    res.status(404).send(error)
+  }
+})
+
 // UPDATE customer
 router.put('/api/customers', async (req, res) => {
   try {
-    const results = await connection.updateCustomer()
-    await res.status(201).send(results)
+    const customerId = req.body.customer_id
+    const firstName = req.body.first_name
+    const lastName = req.body.last_name
+    const streetAddress = req.body.street_address
+    const city = req.body.city
+    const postcode = req.body.postcode
+    const phone = req.body.phone
+    const email = req.body.email
+    const results = await connection.updateCustomer(
+      customerId,
+      firstName,
+      lastName,
+      streetAddress,
+      city,
+      postcode,
+      phone,
+      email
+    )
+    res.status(201).send(results)
   } catch (error) {
+    res.status(400).send(error)
     console.log(error)
   }
 })
@@ -200,7 +239,21 @@ router.put('/api/customers', async (req, res) => {
 // UPDATE supplier
 router.put('/api/suppliers', async (req, res) => {
   try {
-    const results = await connection.updateSupplier()
+    const supplierId = req.body.supplier_id
+    const name = req.body.name
+    const streetAddress = req.body.street_address
+    const city = req.body.city
+    const postcode = req.body.postcode
+    const phone = req.body.phone
+    const email = req.body.email
+    const results = await connection.updateSupplier(
+      supplierId,
+      name,
+      streetAddress,
+      city,
+      postcode,
+      phone,
+      email)
     await res.status(201).send(results)
   } catch (error) {
     console.log(error)
