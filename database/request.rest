@@ -1,6 +1,37 @@
 // Install REST Client extension to VSC if you don't have it.
 
-GET http://localhost:8080/api/products HTTP/1.1
+GET http://localhost:8080/api/customers HTTP/1.1
+
+###
+
+PUT http://localhost:8080/api/customers HTTP/1.1
+Content-Type: application/json
+
+{
+    "customer_id" : 3,
+    "first_name": null,
+    "last_name": "Virtanen",
+    "street_address": null,
+    "city": null,
+    "postcode": null,
+    "phone": null,
+    "email": null
+}
+
+###
+
+PUT http://localhost:8080/api/suppliers HTTP/1.1
+Content-Type: application/json
+
+{
+    "supplier_id" : 3,
+    "name": null,
+    "street_address": null,
+    "city": "Helsinki",
+    "postcode": null,
+    "phone": null,
+    "email": null
+}
 
 ###
 
@@ -34,12 +65,12 @@ POST http://localhost:8080/api/products  HTTP/1.1
 Content-Type: application/json
 
 {  
-    "supplier_name": "Siivouspojat Oy",
-    "product_name": "AAAAAAAAAAA",
-    "product_description": "aaaa",
-    "product_price": 5.50,
+    "supplier_name": "SiistiSiivous tmi",
+    "product_name": "ttttt",
+    "product_description": "ssss",
+    "product_price": 222.50,
     "ends_at": null,
-    "work_hours": 4,
+    "work_hours": 1,
     "is_available": true
 }
 
@@ -68,3 +99,5 @@ Content-Type: application/json
 }
 
 ###
+
+DELETE http://localhost:8080/api/customers/7  HTTP/1.1

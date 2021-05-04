@@ -199,11 +199,28 @@ class ConnectionFunctions {
     })
   }
 
-  static updateCustomer () {
+  // Update customer info if given value is not null, else stay unchanged
+  static updateCustomer (
+    customerId,
+    firstName,
+    lastName,
+    streetAddress,
+    city,
+    postcode,
+    phone,
+    email) {
     return new Promise((resolve, reject) => {
       if (connection) {
         const sql = `UPDATE customers 
-                      SET`
+                     SET 
+                         first_name = COALESCE(${connection.escape(firstName)}, first_name),
+                         last_name  = COALESCE(${connection.escape(lastName)}, last_name),
+                         street_address = COALESCE(${connection.escape(streetAddress)}, street_address),
+                         city = COALESCE(${connection.escape(city)}, city),
+                         postcode = COALESCE(${connection.escape(postcode)}, postcode),
+                         phone = COALESCE(${connection.escape(phone)}, phone),
+                         email = COALESCE(${connection.escape(email)}, email)
+                     WHERE customer_id = ${connection.escape(customerId)}`
         connection.query(sql, (err, results) => {
           if (err) throw (err)
           resolve(results)
@@ -214,11 +231,26 @@ class ConnectionFunctions {
     })
   }
 
-  static updateSupplier () {
+  // Update supplier info if given value is not null, else stay unchanged
+  static updateSupplier (
+    supplierId,
+    name,
+    streetAddress,
+    city,
+    postcode,
+    phone,
+    email) {
     return new Promise((resolve, reject) => {
       if (connection) {
-        const sql = `UPDATE supplier 
-                      SET`
+        const sql = `UPDATE suppliers
+                     SET 
+                         name = COALESCE(${connection.escape(name)}, name),
+                         street_address = COALESCE(${connection.escape(streetAddress)}, street_address),
+                         city = COALESCE(${connection.escape(city)}, city),
+                         postcode = COALESCE(${connection.escape(postcode)}, postcode),
+                         phone = COALESCE(${connection.escape(phone)}, phone),
+                         email = COALESCE(${connection.escape(email)}, email)
+                     WHERE supplier_id = ${connection.escape(supplierId)}`
         connection.query(sql, (err, results) => {
           if (err) throw (err)
           resolve(results)
