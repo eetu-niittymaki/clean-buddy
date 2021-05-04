@@ -31,3 +31,24 @@ END $$
 
 DELIMITER ;
 
+DELIMITER $$
+
+CREATE PROCEDURE saveOrder(
+                IN supplierIdIn INT, 
+                IN customerIdIn INT, 
+                IN productIdIn INT, 
+                IN quantityIn INT)
+BEGIN 
+    INSERT INTO orders (supplier_id, customer_id)
+    VALUES (supplierIdIn, customerIdIn);
+    INSERT INTO order_items
+    SET order_id = (SELECT MAX(order_id) FROM orders),
+        product_id = productIdIn,
+        quantity = quantityIn,
+        total_price = (SELECT product_price FROM products 
+                        WHERE product_id = productIdIn) * quantityIn;
+END $$
+
+DELIMITER ;
+        
+        

@@ -70,6 +70,26 @@ router.get('/api/suppliers/', async (req, res) => {
   }
 })
 
+// Get orders
+router.get('/api/orders', async (req, res) => {
+  try {
+    const results = await connection.getOrders()
+    res.status(200).send(results)
+  } catch (error) {
+    res.status(404).send(error)
+  }
+})
+
+// Get order items
+router.get('/api/order-items', async (req, res) => {
+  try {
+    const results = await connection.getOrderItems()
+    res.status(200).send(results)
+  } catch (error) {
+    res.status(404).send(error)
+  }
+})
+
 // Add customer
 router.post('/api/customers/', async (req, res) => {
   try {
@@ -152,6 +172,27 @@ router.post('/api/products', async (req, res) => {
   }
 })
 
+// Add order
+router.post('/api/orders', async (req, res) => {
+  try {
+    const customerIdIn = req.body.customer_id_in
+    const supplierIdIn = req.body.supplier_id_in
+    // const orderIdIn = req.body.order_id_in
+    const productIdIn = req.body.product_id_in
+    const quantityIn = req.body.quantity_in
+    const results = await connection.saveOrder(
+      customerIdIn,
+      supplierIdIn,
+      // orderIdIn,
+      productIdIn,
+      quantityIn
+    )
+    res.status(201).send(results)
+  } catch (error) {
+    res.status(404).send(error)
+  }
+})
+
 // Add offer request
 router.post('/api/offer-requests', async (req, res) => {
   try {
@@ -184,27 +225,6 @@ router.post('/api/offer-requests', async (req, res) => {
     await res.status(201).send(results)
   } catch (error) {
     res.status(400).send(error)
-  }
-})
-
-// POST order
-router.post('/api/orders', async (req, res) => {
-  try {
-    const customerPhone = req.body.customer_phone
-    const customerEmail = req.body.customer_email
-    const orderIdIn = req.body.order_id_in
-    const productNameIn = req.body.product_name_in
-    const quantityIn = req.body.quantity_in
-    const results = await connection.saveOrder(
-      customerPhone,
-      customerEmail,
-      orderIdIn,
-      productNameIn,
-      quantityIn
-    )
-    res.status(201).send(results)
-  } catch (error) {
-    res.status(404).send(error)
   }
 })
 

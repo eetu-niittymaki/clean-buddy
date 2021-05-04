@@ -1,10 +1,10 @@
 // Install REST Client extension to VSC if you don't have it.
 
-GET http://localhost:8080/api/customers HTTP/1.1
+GET http://localhost:8080/api/orders HTTP/1.1
 
 ###
 
-PUT http://localhost:8080/api/customers HTTP/1.1
+PUT http://localhost:8080/api/products HTTP/1.1
 Content-Type: application/json
 
 {
@@ -47,6 +47,18 @@ Content-Type: application/json
     "phone": "F",
     "email": "testi",
     "password": "testi"
+}
+
+###
+
+POST http://localhost:8080/api/orders HTTP/1.1
+Content-Type: application/json
+
+{   
+    "customer_id_in": 4,
+    "supplier_id_in": 2,
+    "product_id_in": 18,
+    "quantity_in": 2
 }
 
 ###
@@ -100,4 +112,4 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:8080/api/customers/7  HTTP/1.1
+DELETE http://localhost:8080/api/customers/14  HTTP/1.1

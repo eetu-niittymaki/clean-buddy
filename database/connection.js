@@ -34,7 +34,7 @@ class ConnectionFunctions {
   static getProducts () {
     return new Promise((resolve, reject) => {
       if (connection) {
-        connection.query('SELECT * From products', (err, products) => {
+        connection.query('SELECT * FROM products', (err, products) => {
           if (err) throw (err)
           resolve(products)
         })
@@ -51,6 +51,34 @@ class ConnectionFunctions {
         connection.query('SELECT supplier_id, name, street_address, city, postcode, phone, email FROM suppliers', (err, suppliers) => {
           if (err) throw (err)
           resolve(suppliers)
+        })
+      } else {
+        reject(Error)
+      }
+    })
+  }
+
+  // GET all orders
+  static getOrders () {
+    return new Promise((resolve, reject) => {
+      if (connection) {
+        connection.query('SELECT * FROM orders', (err, orders) => {
+          if (err) throw (err)
+          resolve(orders)
+        })
+      } else {
+        reject(Error)
+      }
+    })
+  }
+
+  // GET all order items
+  static getOrderItems () {
+    return new Promise((resolve, reject) => {
+      if (connection) {
+        connection.query('SELECT * FROM order_items', (err, orderItems) => {
+          if (err) throw (err)
+          resolve(orderItems)
         })
       } else {
         reject(Error)
@@ -128,6 +156,28 @@ class ConnectionFunctions {
         connection.query(sql, (err, product) => {
           if (err) throw (err)
           resolve(`Added ${productName} to database`)
+        })
+      } else {
+        reject(Error)
+      }
+    })
+  }
+
+  // Add order to DB
+  static saveOrder (
+    supplierIdIn,
+    customerIdIn,
+    productIdIn,
+    quantityIn) {
+    return new Promise((resolve, reject) => {
+      if (connection) {
+        const sql = `CALL saveOrder(${connection.escape(supplierIdIn)}, 
+                                    ${connection.escape(customerIdIn)}, 
+                                    ${connection.escape(productIdIn)}, 
+                                    ${connection.escape(quantityIn)})`
+        connection.query(sql, (err, order) => {
+          if (err) throw (err)
+          resolve(order)
         })
       } else {
         reject(Error)

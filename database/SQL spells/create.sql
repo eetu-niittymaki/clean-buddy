@@ -44,11 +44,15 @@ CREATE TABLE products(
 
 CREATE TABLE orders(
     order_id INT AUTO_INCREMENT,
+    supplier_id INT,
     customer_id INT,
     order_date TIMESTAMP,
     PRIMARY KEY (order_id),
     FOREIGN KEY (customer_id)
         REFERENCES customers (customer_id)
+        ON UPDATE RESTRICT ON DELETE CASCADE
+    FOREIGN KEY (supplier_id)
+        REFERENCES suppliers (supplier_id)
         ON UPDATE RESTRICT ON DELETE CASCADE
 );
 
@@ -57,7 +61,6 @@ CREATE TABLE order_items(
     product_id INT,
     quantity INT NOT NULL,
     total_price DECIMAL(15, 3),
-    PRIMARY KEY(order_id, product_id),
     FOREIGN KEY (order_id)
         REFERENCES orders (order_id)
         ON UPDATE RESTRICT ON DELETE CASCADE,
@@ -117,12 +120,9 @@ VALUES ("Pekka", "Hmmm", "Munkoti", "Lohja", "54321", "+42231231", "mä@hä.fi",
 
 
 INSERT INTO orders
-SET customer_id = (SELECT customer_id FROM customers
-                    WHERE phone = customerPhone
-                    AND   email = customerEmail)
+SET customer_id = customerIdIn
 INSERT INTO order_items
-SET order_id = (SELECT order_id FROM orders
-                WHERE order_id = orderIdIn),
+SET order_id = orderIdIn,
     product_id = (SELECT product_id products
                   WHERE product_name = productNameIn),
     quantity = quantityIn,
