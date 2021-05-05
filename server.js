@@ -41,7 +41,7 @@ const generateAccessToken = (username) => {
 }
 
 // Get customers
-router.get('/api/customers', async (req, res) => {
+router.get('/api/customers/', async (req, res) => {
   try {
     const results = await connection.getCustomers()
     await res.status(200).send(results)
@@ -71,7 +71,7 @@ router.get('/api/suppliers/', async (req, res) => {
 })
 
 // Get orders
-router.get('/api/orders', async (req, res) => {
+router.get('/api/orders/', async (req, res) => {
   try {
     const results = await connection.getOrders()
     res.status(200).send(results)
@@ -81,7 +81,7 @@ router.get('/api/orders', async (req, res) => {
 })
 
 // Get order items
-router.get('/api/order-items', async (req, res) => {
+router.get('/api/order-items/', async (req, res) => {
   try {
     const results = await connection.getOrderItems()
     res.status(200).send(results)
@@ -121,7 +121,7 @@ router.post('/api/customers/', async (req, res) => {
 })
 
 // Add supplier
-router.post('/api/suppliers', async (req, res) => {
+router.post('/api/suppliers/', async (req, res) => {
   try {
     const name = req.body.name
     const supplierDescription = req.body.supplier_description
@@ -148,7 +148,7 @@ router.post('/api/suppliers', async (req, res) => {
 })
 
 // Add product
-router.post('/api/products', async (req, res) => {
+router.post('/api/products/', async (req, res) => {
   try {
     const supplierName = req.body.supplier_name
     const productName = req.body.product_name
@@ -173,7 +173,7 @@ router.post('/api/products', async (req, res) => {
 })
 
 // Add order
-router.post('/api/orders', async (req, res) => {
+router.post('/api/orders/', async (req, res) => {
   try {
     const customerIdIn = req.body.customer_id_in
     const supplierIdIn = req.body.supplier_id_in
@@ -194,7 +194,7 @@ router.post('/api/orders', async (req, res) => {
 })
 
 // Add offer request
-router.post('/api/offer-requests', async (req, res) => {
+router.post('/api/offer-requests/', async (req, res) => {
   try {
     const apartmentType = req.body.apartment_type
     const apartmentArea = req.body.apartment_area
@@ -229,7 +229,7 @@ router.post('/api/offer-requests', async (req, res) => {
 })
 
 // UPDATE customer
-router.put('/api/customers', async (req, res) => {
+router.put('/api/customers/', async (req, res) => {
   try {
     const customerId = req.body.customer_id
     const firstName = req.body.first_name
@@ -257,7 +257,7 @@ router.put('/api/customers', async (req, res) => {
 })
 
 // UPDATE supplier
-router.put('/api/suppliers', async (req, res) => {
+router.put('/api/suppliers/', async (req, res) => {
   try {
     const supplierId = req.body.supplier_id
     const name = req.body.name
@@ -303,7 +303,7 @@ router.delete('/api/suppliers/:id([0-9]+)', async (req, res) => {
 })
 
 // Get company specific offer requests
-router.get('/api/offer-requests', async (req, res) => {
+router.get('/api/offer-requests/', async (req, res) => {
   try {
     const supplier = req.query.supplier
     const results = await connection.getCompanyOfferRequests(supplier)
@@ -314,7 +314,7 @@ router.get('/api/offer-requests', async (req, res) => {
 })
 
 // Customer login
-router.post('/api/auth/signin', async (req, res) => {
+router.post('/api/auth/signin/', async (req, res) => {
   try {
     const email = req.body.email
     const password = req.body.password
