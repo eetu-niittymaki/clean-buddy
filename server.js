@@ -123,6 +123,9 @@ router.post('/api/customers/', async (req, res) => {
 // Add supplier
 router.post('/api/suppliers/', async (req, res) => {
   try {
+    const salt = await bcrypt.genSalt(10)
+    const hashedPassword = await bcrypt.hash(req.body.password, salt)
+
     const name = req.body.name
     const supplierDescription = req.body.supplier_description
     const streetAddress = req.body.street_address
@@ -130,7 +133,7 @@ router.post('/api/suppliers/', async (req, res) => {
     const postcode = req.body.postcode
     const phone = req.body.phone
     const email = req.body.email
-    const password = req.body.password
+    const password = hashedPassword
     const results = await connection.saveSupplier(
       name,
       supplierDescription,
