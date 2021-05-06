@@ -283,6 +283,30 @@ router.put('/api/suppliers/', async (req, res) => {
   }
 })
 
+// UPDATE products
+router.put('/api/products/', async (req, res) => {
+  try {
+    const productId = req.body.product_id
+    const productName = req.body.product_name
+    const productDescription = req.body.product_description
+    const productPrice = req.body.product_price
+    const endsAt = req.body.ends_at
+    const workHours = req.body.work_hours
+    const isAvailable = req.body.is_available
+    const results = await connection.updateProduct(
+      productId,
+      productName,
+      productDescription,
+      productPrice,
+      endsAt,
+      workHours,
+      isAvailable)
+    await res.status(201).send(results)
+  } catch (error) {
+    console.log(error)
+  }
+})
+
 // DELETE customer
 router.delete('/api/customers/:id([0-9]+)', async (req, res) => {
   try {
@@ -322,20 +346,23 @@ router.post('/api/auth/signin/', async (req, res) => {
     const email = req.body.email
     const password = req.body.password
     const results = await connection.customerLogin(email)
-    if (results.length === 0) {
-      res.status(204).send('Wrong email/password!')
-    }
-    const compare = bcrypt.compare(password, results[0].password)
-    if (compare) {
-      const token = generateAccessToken({ username: email })
-      const customerId = results[0].customer_id
-      req.session.loggedin = true // Logs user into session
-      req.session.username = email // Session name
-      res.send(({ token: token, customerId: customerId })) // Token used for saving session login
+    if (!results.length) {
+      res.status(206).send()
+    } else if (results) {
+      const compare = await bcrypt.compare(password, results[0].password)
+      if (compare) {
+        const token = generateAccessToken({ username: email })
+        const customerId = results[0].customer_id
+        req.session.loggedin = true // Logs user into session
+        req.session.username = email // Session name
+        res.status(200).send(({ token: token, customerId: customerId })) // Token used for saving session login
+      } else {
+        res.status(204).send('Wrong email/password!')
+      }
     }
   } catch (error) {
     res.status(500).send(error)
-    console.log(error)
+    // console.log(error)
   }
 })
 

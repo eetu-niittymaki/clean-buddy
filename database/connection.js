@@ -311,6 +311,36 @@ class ConnectionFunctions {
     })
   }
 
+  // Update product info if given value is not null, else stay unchanged
+  static updateProduct (
+    productId,
+    productName,
+    productDescription,
+    productPrice,
+    endsAt,
+    workHours,
+    isAvailable) {
+    return new Promise((resolve, reject) => {
+      if (connection) {
+        const sql = `UPDATE products
+                     SET 
+                         product_name = COALESCE(${connection.escape(productName)}, product_name),
+                         product_description = COALESCE(${connection.escape(productDescription)}, product_description),
+                         product_price = COALESCE(${connection.escape(productPrice)}, product_price),
+                         ends_at = COALESCE(${connection.escape(endsAt)}, ends_at),
+                         work_hours = COALESCE(${connection.escape(workHours)}, work_hours),
+                         product_is_available = COALESCE(${connection.escape(isAvailable)}, product_is_available)
+                     WHERE product_id = ${connection.escape(productId)}`
+        connection.query(sql, (err, results) => {
+          if (err) throw (err)
+          resolve(results)
+        })
+      } else {
+        reject(Error)
+      }
+    })
+  }
+
   static deleteCustomer (id) {
     return new Promise((resolve, reject) => {
       if (connection) {
