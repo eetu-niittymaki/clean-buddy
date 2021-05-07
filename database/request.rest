@@ -1,6 +1,6 @@
 // Install REST Client extension to VSC if you don't have it.
 
-GET http://localhost:8080/api/orders HTTP/1.1
+GET http://localhost:8080/api/customers HTTP/1.1
 
 ###
 
@@ -20,14 +20,15 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:8080/api/suppliers HTTP/1.1
+PUT http://localhost:8080/api/customers HTTP/1.1
 Content-Type: application/json
 
 {
-    "supplier_id" : 3,
-    "name": null,
+    "customer_id" : 19,
+    "first_name": "Jeesus",
+    "last_name": null,
     "street_address": null,
-    "city": "Helsinki",
+    "city": null,
     "postcode": null,
     "phone": null,
     "email": null
@@ -39,14 +40,14 @@ POST http://localhost:8080/api/customers  HTTP/1.1
 Content-Type: application/json
 
 {
-    "first_name": "A",
-    "last_name": "B",
-    "street_address": "C",
-    "city": "D",
-    "postcode": "E",
-    "phone": "F",
-    "email": "testi",
-    "password": "testi"
+    "first_name": "P**ka",
+    "last_name": "Jaska",
+    "street_address": "Munkoti 3 bbb",
+    "city": "Lahti",
+    "postcode": "1+2",
+    "phone": "1231233333",
+    "email": "email",
+    "password": "email"
 }
 
 ###
@@ -78,8 +79,8 @@ Content-Type: application/json
 
 {  
     "supplier_name": "SiistiSiivous tmi",
-    "product_name": "ttttt",
-    "product_description": "ssss",
+    "product_name": "Perus siivous",
+    "product_description": "Ihan perus siivous.",
     "product_price": 222.50,
     "ends_at": null,
     "work_hours": 1,
@@ -112,4 +113,4 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:8080/api/customers/14  HTTP/1.1
+DELETE http://localhost:8080/api/customers/19  HTTP/1.1

@@ -8,7 +8,6 @@ END $$
 
 DELIMITER ;
 
-
 DELIMITER $$
 
 CREATE PROCEDURE insert_if_not_exists(
@@ -50,5 +49,3 @@ BEGIN
 END $$
 
 DELIMITER ;
-        
-        
