@@ -346,16 +346,46 @@ router.post('/api/auth/signin/', async (req, res) => {
     const email = req.body.email
     const password = req.body.password
     const results = await connection.customerLogin(email)
-    if (!results.length) {
+    if (email === process.env.ADMIN_USER && password === process.env.ADMIN_PASSWORD) {
+      res.status(200).send({ admin: true })
+    } else {
+      if (!results.length) { // Email not found in table.
+        res.status(206).send()
+      } else {
+        const compare = await bcrypt.compare(password, results[0].password)
+        if (compare) {
+          const token = generateAccessToken({ username: email })
+          const customerId = results[0].customer_id
+          req.session.loggedin = true // Logs user into session
+          req.session.username = email // Session name
+          res.status(200).send(({ token: token, userId: customerId, admin: false })) // Token used for saving session login
+        } else {
+          res.status(204).send('Wrong email/password')
+        }
+      }
+    }
+  } catch (error) {
+    res.status(500).send(error)
+    // console.log(error)
+  }
+})
+
+// Supplier login
+router.post('/api/auth/supplier/', async (req, res) => {
+  try {
+    const email = req.body.email
+    const password = req.body.password
+    const results = await connection.supplierLogin(email)
+    if (!results.length) { // Email not found
       res.status(206).send()
-    } else if (results) {
+    } else {
       const compare = await bcrypt.compare(password, results[0].password)
       if (compare) {
-        const token = generateAccessToken({ username: email })
-        const customerId = results[0].customer_id
+        const token = generateAccessToken({ username: results[0].name })
+        const supplierId = results[0].supplier_id
         req.session.loggedin = true // Logs user into session
         req.session.username = email // Session name
-        res.status(200).send(({ token: token, customerId: customerId })) // Token used for saving session login
+        res.status(200).send(({ token: token, supplierId: supplierId })) // Token used for saving session login
       } else {
         res.status(204).send('Wrong email/password!')
       }

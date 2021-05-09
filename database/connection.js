@@ -382,6 +382,20 @@ class ConnectionFunctions {
       }
     })
   }
+
+  static supplierLogin (email) {
+    return new Promise((resolve, reject) => {
+      if (connection) {
+        const sql = `SELECT * FROM suppliers WHERE email = ${connection.escape(email)}`
+        connection.query(sql, (err, results) => {
+          if (err) throw (err)
+          resolve(results)
+        })
+      } else {
+        reject(Error('Supplier not found'))
+      }
+    })
+  }
 }
 
 module.exports = ConnectionFunctions
