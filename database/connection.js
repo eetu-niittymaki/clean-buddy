@@ -371,6 +371,20 @@ class ConnectionFunctions {
     })
   }
 
+  static deleteOffer (id) {
+    return new Promise((resolve, reject) => {
+      if (connection) {
+        const sql = `DELETE FROM products WHERE product_id = ${connection.escape(id)}`
+        connection.query(sql, (err, results) => {
+          if (err) throw (err)
+          resolve(results)
+        })
+      } else {
+        reject(Error)
+      }
+    })
+  }
+
   static customerLogin (email) {
     return new Promise((resolve, reject) => {
       if (connection) {

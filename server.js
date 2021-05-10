@@ -331,6 +331,17 @@ router.delete('/api/suppliers/:id([0-9]+)', async (req, res) => {
   }
 })
 
+// Delete offer
+router.delete('/api/products/:id([0-9]+)', async (req, res) => {
+  try {
+    const id = Number(req.params.id)
+    const results = await connection.deleteOffer(id)
+    res.status(200).send(results)
+  } catch (error) {
+    res.status(404).send(error)
+  }
+})
+
 // Get company specific offer requests
 router.get('/api/offer-requests/', async (req, res) => {
   try {
