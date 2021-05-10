@@ -264,6 +264,7 @@ router.put('/api/suppliers/', async (req, res) => {
   try {
     const supplierId = req.body.supplier_id
     const name = req.body.name
+    const supplierDescription = req.body.supplier_ddescription
     const streetAddress = req.body.street_address
     const city = req.body.city
     const postcode = req.body.postcode
@@ -272,6 +273,7 @@ router.put('/api/suppliers/', async (req, res) => {
     const results = await connection.updateSupplier(
       supplierId,
       name,
+      supplierDescription,
       streetAddress,
       city,
       postcode,
