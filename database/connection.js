@@ -296,7 +296,7 @@ class ConnectionFunctions {
         const sql = `UPDATE suppliers
                      SET 
                          name = COALESCE(${connection.escape(name)}, name),
-                         supplier_description = COALAESCE(${supplierDescription}, supplier_description),
+                         supplier_description = COALESCE(${supplierDescription}, supplier_description),
                          street_address = COALESCE(${connection.escape(streetAddress)}, street_address),
                          city = COALESCE(${connection.escape(city)}, city),
                          postcode = COALESCE(${connection.escape(postcode)}, postcode),
