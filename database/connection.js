@@ -358,7 +358,7 @@ class ConnectionFunctions {
   static deleteSupplier (id) {
     return new Promise((resolve, reject) => {
       if (connection) {
-        const sql = `DELETE FROM products WHERE supplier_id = ${connection.escape(id)}`
+        const sql = `DELETE FROM suppliers WHERE supplier_id = ${connection.escape(id)}`
         connection.query(sql, (err, results) => {
           if (err) throw (err)
           resolve(results)
@@ -372,7 +372,7 @@ class ConnectionFunctions {
   static deleteOffer (id) {
     return new Promise((resolve, reject) => {
       if (connection) {
-        const sql = `DELETE FROM suppliers WHERE product_id = ${connection.escape(id)}`
+        const sql = `DELETE FROM offers WHERE product_id = ${connection.escape(id)}`
         connection.query(sql, (err, results) => {
           if (err) throw (err)
           resolve(results)
