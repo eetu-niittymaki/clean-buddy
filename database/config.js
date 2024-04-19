@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const config = {
   connectionLimit: 10,
   host: 'mydb.tamk.fi',
