@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/static/css/main.805f4d1a.css",
-    "main.js": "/static/js/main.dea528c6.js",
+    "main.js": "/static/js/main.aac0a134.js",
     "static/js/453.e50ec118.chunk.js": "/static/js/453.e50ec118.chunk.js",
     "static/media/cleanbuddy_logo.png": "/static/media/cleanbuddy_logo.c9122499ff759261f2cc.png",
     "static/media/offerbg2.png": "/static/media/offerbg2.f616edab26ae2907036c.png",
     "index.html": "/index.html",
     "main.805f4d1a.css.map": "/static/css/main.805f4d1a.css.map",
-    "main.dea528c6.js.map": "/static/js/main.dea528c6.js.map",
+    "main.aac0a134.js.map": "/static/js/main.aac0a134.js.map",
     "453.e50ec118.chunk.js.map": "/static/js/453.e50ec118.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.805f4d1a.css",
-    "static/js/main.dea528c6.js"
+    "static/js/main.aac0a134.js"
   ]
 }
