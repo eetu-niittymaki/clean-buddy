@@ -48,14 +48,14 @@ POST http://localhost:8080/api/customers  HTTP/1.1
 Content-Type: application/json
 
 {
-    "first_name": "P**ka",
-    "last_name": "Jaska",
-    "street_address": "Munkoti 3 bbb",
+    "first_name": "hmm",
+    "last_name": "aaa",
+    "street_address": "Munkoti 4 bbb",
     "city": "Lahti",
     "postcode": "1+2",
     "phone": "1231233333",
-    "email": "email",
-    "password": "email"
+    "email": "ee",
+    "password": "ee"
 }
 
 ###
@@ -76,8 +76,8 @@ POST http://localhost:8080/api/auth/signin HTTP/1.1
 Content-Type: application/json
 
 {
-    "email": "ei@oo.fi",
-    "password": "tämä"
+    "email": "ee",
+    "password": "ee"
 }
 
 ###

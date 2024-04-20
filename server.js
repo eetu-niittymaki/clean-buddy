@@ -279,7 +279,7 @@ router.put('/api/suppliers/', async (req, res) => {
       postcode,
       phone,
       email)
-    await res.status(201).send(results)
+    res.status(201).send(results)
   } catch (error) {
     console.log(error)
   }
@@ -303,7 +303,7 @@ router.put('/api/products/', async (req, res) => {
       endsAt,
       workHours,
       isAvailable)
-    await res.status(201).send(results)
+    res.status(201).send(results)
   } catch (error) {
     console.log(error)
   }
@@ -367,11 +367,12 @@ router.post('/api/auth/signin/', async (req, res) => {
       } else {
         const compare = await bcrypt.compare(password, results[0].password)
         if (compare) {
-          const token = generateAccessToken({ username: email })
+          //const token = generateAccessToken({ username: email })
           const customerId = results[0].customer_id
           req.session.loggedin = true // Logs user into session
           req.session.username = email // Session name
-          res.status(200).send(({ token: token, userId: customerId, admin: false })) // Token used for saving session login
+          
+          res.status(200).send(({ token: "", userId: customerId, admin: false })) // Token used for saving session login
         } else {
           res.status(204).send('Wrong email/password')
         }
